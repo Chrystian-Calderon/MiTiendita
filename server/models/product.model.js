@@ -1,40 +1,35 @@
 import connection from '../config/db.js';
 
 class ProductModel {
-  static async findAll() {
-    const conn = await connection();
-    const [rows] = await conn.query('SELECT * FROM productos');
+  async findAll() {
+    const [rows] = await connection.query('SELECT * FROM productos');
     return rows;
   }
 
-  static async findById(id) {
-    const conn = await connection();
-    const [rows] = await conn.query('SELECT * FROM productos WHERE id = ?', [id]);
+  async findById(id) {
+    const [rows] = await connection.query('SELECT * FROM productos WHERE id = ?', [id]);
     return rows[0];
   }
 
-  static async create({ nombre, stock_actual, unidad_medida, precio_venta }) {
-    const conn = await connection();
-    const [result] = await conn.query(
-      'INSERT INTO productos (nombre, stock_actual, unidad_medida, precio_venta) VALUES (?, ?, ?, ?)',
-      [nombre, stock_actual, unidad_medida, precio_venta]
+  async create({ id, nombre, tipo, unidad_medida, precio_compra_unitario, precio_venta_unitario, stock_actual }) {
+    const [result] = await connection.query(
+      'INSERT INTO productos (id, nombre, tipo, unidad_medida, precio_compra_unitario, precio_venta_unitario, stock_actual) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [id, nombre, tipo, unidad_medida, precio_compra_unitario, precio_venta_unitario, stock_actual]
     );
-    return { id: result.insertId, nombre, stock_actual, unidad_medida, precio_venta };
+    return { success: (result.affectedRows > 0) ? true : false };
   }
 
-  static async update(id, { nombre, stock_actual, unidad_medida, precio_venta }) {
-    const conn = await connection();
-    await conn.query(
-      'UPDATE productos SET nombre = ?, stock_actual = ?, unidad_medida = ?, precio_venta = ? WHERE id = ?',
-      [nombre, stock_actual, unidad_medida, precio_venta, id]
+  async update({ id, nombre, tipo, unidad_medida, precio_compra_unitario, precio_venta_unitario, stock_actual }) {
+    const [result] = await connection.query(
+      'UPDATE productos SET nombre = ?, tipo = ?, unidad_medida = ?, precio_compra_unitario = ?, precio_venta_unitario = ?, stock_actual = ? WHERE id = ?',
+      [nombre, tipo, unidad_medida, precio_compra_unitario, precio_venta_unitario, stock_actual, id]
     );
-    return { id, nombre, stock_actual, unidad_medida, precio_venta };
+    return { success: (result.affectedRows > 0) ? true : false };
   }
 
-  static async delete(id) {
-    const conn = await connection();
-    await conn.query('DELETE FROM productos WHERE id = ?', [id]);
-    return { deleted: true };
+  async delete({ id }) {
+    const [result] = await connection.query('DELETE FROM productos WHERE id = ?', [id]);
+    return { deleted: (result.affectedRows > 0) ? true : false};
   }
 }
 
