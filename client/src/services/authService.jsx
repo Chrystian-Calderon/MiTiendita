@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:3000/login'
+const API_URL = `${import.meta.env.VITE_API_URL}/login`
 
 export const login = async (data) => {
   try {

@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = 'http://localhost:3000/shop'
+const API_URL = `${import.meta.env.VITE_API_URL}/shop`
 
 export const getShopping = async () => {
   try {
