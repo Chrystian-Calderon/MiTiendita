@@ -5,9 +5,9 @@ const reportRouter = ({ reportModel }) => {
   const router = express.Router();
   const controller = new ReportController({ reportModel });
 
-  router.get('/cost-sales', controller.getCostsAndSales);
-  router.get('/best-selling-products', controller.getBestSellingProducts);
-  router.get('/best-selling-dishes', controller.getBestSellingDishes);
+  router.post('/cost-sales', controller.getCostsAndSales);
+  router.post('/best-selling-products', controller.getBestSellingProducts);
+  router.post('/best-selling-dishes', controller.getBestSellingDishes);
 
   return router;
 }

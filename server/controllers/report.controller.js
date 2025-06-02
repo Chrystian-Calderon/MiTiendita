@@ -5,6 +5,7 @@ class ReportController {
 
   getCostsAndSales = async (req, res) => {
     const { type } = req.body;
+    console.log(req.body)
     try {
       if (type === 'day') {
         const resultSales = await this.model.salesPerDay();
@@ -22,6 +23,7 @@ class ReportController {
 
   getBestSellingProducts = async (req, res) => {
     const { limit } = req.body;
+    console.log(limit)
     try {
       const result = await this.model.bestSellingProducts(limit);
       return res.status(200).json(result);
@@ -29,9 +31,10 @@ class ReportController {
       return res.status(500).json({ error: 'Error al obtener los productos más vendidos' });
     }
   }
-
+  
   getBestSellingDishes = async (req, res) => {
     const { limit } = req.body;
+    console.log(limit)
     try {
       const result = await this.model.bestSellingDishes(limit);
       return res.status(200).json(result);
