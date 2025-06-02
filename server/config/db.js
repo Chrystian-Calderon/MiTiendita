@@ -12,5 +12,8 @@ const connection = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0
 });
+const textConnection = await connection.getConnection();
+await textConnection.ping();
+console.log('Database connection established successfully');
 
 export default connection;
