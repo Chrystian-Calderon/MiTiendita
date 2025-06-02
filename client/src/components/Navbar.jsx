@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 const Navigation = () => {
   return (
     <nav className='navbar'>
+      <h1>Mi Tiendita</h1>
       <ul>
         <li>
           <Link to="/dashboard">Dashboard</Link>

@@ -29,7 +29,10 @@ form.login .login-input > span {@apply text-red-500 text-sm mt-3}
 
 /* navbar */
 .navbar {@apply col-span-3 bg-primary text-white h-dvh}
-.navbar li > a {@apply block px-2 py-3 text-center hover:bg-secundary transition}
+.navbar > h1 {@apply text-2xl font-bold text-center py-4 border-b border-white}
+.navbar ul {@apply flex flex-col justify-center items-center gap-4 list-none m-0 p-0}
+.navbar li {@apply w-full}
+.navbar li > a {@apply block w-full px-2 py-3 text-center hover:bg-secundary transition}
 
 /* title */
 main h1.title {@apply text-xl font-bold text-center py-4 bg-secundary text-white}
