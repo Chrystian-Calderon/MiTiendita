@@ -21,6 +21,16 @@ class ReportsModel {
     return rows;
   }
 
+  async costsPerDay() {
+    const [rows] = await connection.query(`
+      SELECT DATE(fecha) AS dia, SUM(total) AS total_costos
+      FROM compras
+      GROUP BY dia
+      ORDER BY dia DESC
+    `);
+    return rows;
+  }
+
   async costsPerMonth() {
     const [rows] = await connection.query(`
       SELECT YEAR(fecha) AS anio, MONTH(fecha) AS mes, SUM(total) AS total_costos
@@ -52,37 +62,6 @@ class ReportsModel {
       ORDER BY total_vendidos DESC
       LIMIT ?
     `, [limit]);
-    return rows;
-  }
-
-  async currentInventory() {
-    const [rows] = await connection.query(`
-      SELECT nombre, stock_actual, unidad_medida
-      FROM productos
-      ORDER BY nombre
-    `);
-    return rows;
-  }
-
-  async profitabilityPerDay() {
-    const [rows] = await pool.query(`
-      SELECT 
-        DATE(v.fecha) AS fecha,
-        SUM(v.total) AS ingresos,
-        (
-          SELECT SUM(c.total)
-          FROM compras c
-          WHERE DATE(c.fecha) = DATE(v.fecha)
-        ) AS costos,
-        SUM(v.total) - IFNULL((
-          SELECT SUM(c.total)
-          FROM compras c
-          WHERE DATE(c.fecha) = DATE(v.fecha)
-        ), 0) AS ganancia
-      FROM ventas v
-      GROUP BY DATE(v.fecha)
-      ORDER BY fecha DESC
-    `);
     return rows;
   }
 }
