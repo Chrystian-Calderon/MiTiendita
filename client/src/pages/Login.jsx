@@ -48,13 +48,15 @@ const Login = () => {
     e.preventDefault();
     const name = document.getElementById('name').value
     const password = document.getElementById('password').value
-  
+
     validateForm({ name: 'name', value: name })
     validateForm({ name: 'password', value: password })
     try {
       if (error.name === '' && error.password === '' && name && password) {
         const response = await login({username: name, password})
         if (!response.error) {
+          // Guarda el usuario autenticado (puedes guardar el token si tu backend lo envía)
+          localStorage.setItem('auth', JSON.stringify({ username: name, logged: true }));
           navigate('/dashboard')
         } else {
           const message = response.error
