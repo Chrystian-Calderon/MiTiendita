@@ -7,7 +7,7 @@ const ProductModal = ({ data, onClose, onMessage }) => {
     const form = document.querySelector('form')
     const formData = new FormData(form)
     const newData = Object.fromEntries(formData.entries())
-
+    
     try {
       if (!data) {
         const response = await createProduct(newData)
@@ -89,6 +89,10 @@ const ProductModal = ({ data, onClose, onMessage }) => {
               <label htmlFor="precio_venta_unitario">Precio Venta Unitario:</label>
               <input type="number" id="precio_venta_unitario" name="precio_venta_unitario" required />
             </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="stock">Stock:</label>
+            <input type="number" id="stock" name="stock_actual" required />
           </div>
           <div className="form-buttons">
             <button type="button" onClick={onClose}>Cancelar</button>
