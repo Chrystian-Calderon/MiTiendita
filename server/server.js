@@ -4,8 +4,10 @@ import { config } from 'dotenv';
 
 import userRouter from './routes/user.routes.js';
 import productRouter from './routes/product.routes.js';
+import shopRouter from './routes/shop.routes.js';
 import userModel from './models/user.model.js';
 import productModel from './models/product.model.js';
+import shopModel from './models/shop.model.js';
 config();
 
 const app = express();
@@ -20,6 +22,7 @@ const PORT = process.env.PORT;
 
 app.use('/login', userRouter({ userModel }));
 app.use('/products', productRouter({ productModel }));
+app.use('/shop', shopRouter({ shopModel }));
 
 app.listen(PORT, () => {
   console.log(`Server iniciado en puerto ${PORT}`);

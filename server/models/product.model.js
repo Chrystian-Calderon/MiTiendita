@@ -6,7 +6,7 @@ class ProductModel {
     return rows;
   }
 
-  async findById(id) {
+  async findById({ id }) {
     const [rows] = await connection.query('SELECT * FROM productos WHERE id = ?', [id]);
     return rows[0];
   }
@@ -27,9 +27,22 @@ class ProductModel {
     return { success: (result.affectedRows > 0) ? true : false };
   }
 
+  async updateStock({ id, stock_actual }) {
+    const [result] = await connection.query(
+      'UPDATE productos SET stock_actual = ? WHERE id = ?',
+      [stock_actual, id]
+    );
+    return { success: (result.affectedRows > 0) ? true : false };
+  }
+
   async delete({ id }) {
     const [result] = await connection.query('DELETE FROM productos WHERE id = ?', [id]);
     return { deleted: (result.affectedRows > 0) ? true : false};
+  }
+
+  async findByName({ nombre }) {
+    const [rows] = await connection.query('SELECT id, nombre FROM productos WHERE nombre LIKE ?', [`%${nombre}%`]);
+    return rows;
   }
 }
 
