@@ -38,7 +38,29 @@ main h1.title {@apply text-xl font-bold text-center py-4 bg-secundary text-white
 main .content {@apply p-4}
 
 /* table */
-main .container-table {@apply overflow-x-auto mt-4}
-main .container-table > table.table {@apply border border-black border-collapse}
+main .container-table {@apply overflow-x-auto mt-4 h-[500px] overflow-y-scroll rounded-xl}
+main .container-table::-webkit-scrollbar {height: 4px; width: 7px;}
+main .container-table::-webkit-scrollbar-track {@apply bg-white}
+main .container-table::-webkit-scrollbar-thumb {@apply bg-primary rounded-sm}
+main .container-table > table.table {@apply border-collapse min-w-full}
+main .container-table > table.table thead {@apply bg-secundary text-white}
 main .container-table > table.table th,
-main .container-table > table.table td {@apply border border-black p-2}
+main .container-table > table.table td {@apply border-gray-300 border p-2}
+main .container-table > table.table tr:nth-child(2n),
+main .container-table > table.table tbody tr:hover {@apply bg-primary-v2}
+main .container-table > table.table tbody td.actions {@apply flex justify-between gap-1}
+main .container-table > table.table tbody td.actions > button {@apply p-2 bg-green-500 text-white rounded cursor-pointer}
+main .container-table > table.table tbody td.actions > button.delete {@apply bg-red-500}
+
+/* modal */
+.modal {@apply fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-96 bg-white rounded-lg shadow-lg z-50 p-4}
+.modal .modal-content > h2 {@apply text-2xl font-bold mb-4}
+.modal .modal-content > form {@apply flex flex-col gap-3}
+.modal .modal-content > form input {@apply w-full p-2 rounded border}
+.modal .modal-content > form .form-group-2 {@apply flex gap-2}
+.modal .modal-content > form .form-group-2 .form-group {@apply flex-1/2}
+.modal .modal-content > form .form-group-2 .form-group select {@apply w-full p-2 rounded border}
+.modal .modal-content > form .form-group.cantidad {@apply flex gap-2 items-center}
+.modal .modal-content > form .form-buttons {@apply flex justify-end gap-2 mt-4}
+.modal .modal-content > form button {@apply w-fit px-4 py-2 rounded bg-primary text-white cursor-pointer hover:bg-secundary transition}
+.modal .modal-content > form button[type="button"] {@apply bg-white text-primary border border-primary hover:bg-primary hover:text-white}
