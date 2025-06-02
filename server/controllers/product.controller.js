@@ -18,7 +18,7 @@ class ProductController {
   }
 
   createProduct = async (req, res) => {
-    const { nombre, tipo, unidad_medida, precio_compra_unitario, precio_venta_unitario, stock_actual } = req.body;
+    const { nombre, tipo, unidad_medida, cantidad_por_presentacion, precio_compra_unitario, precio_venta_unitario, stock_actual } = req.body;
     try {
       const id = uuid();
       const result = await this.model.create({
@@ -26,6 +26,7 @@ class ProductController {
         nombre,
         tipo,
         unidad_medida,
+        cantidad_por_presentacion,
         precio_compra_unitario,
         precio_venta_unitario,
         stock_actual
@@ -41,7 +42,7 @@ class ProductController {
 
   updateProduct = async (req, res) => {
     const { id } = req.params;
-    const { nombre, tipo, unidad_medida, precio_compra_unitario, precio_venta_unitario, stock_actual } = req.body;
+    const { nombre, tipo, unidad_medida, cantidad_por_presentacion, precio_compra_unitario, precio_venta_unitario, stock_actual } = req.body;
 
     try {
       const result = await this.model.update({
@@ -49,6 +50,7 @@ class ProductController {
         nombre,
         tipo,
         unidad_medida,
+        cantidad_por_presentacion,
         precio_compra_unitario,
         precio_venta_unitario,
         stock_actual

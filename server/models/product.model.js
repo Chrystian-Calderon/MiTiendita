@@ -11,18 +11,18 @@ class ProductModel {
     return rows[0];
   }
 
-  async create({ id, nombre, tipo, unidad_medida, precio_compra_unitario, precio_venta_unitario, stock_actual }) {
+  async create({ id, nombre, tipo, unidad_medida, cantidad_por_presentacion, precio_compra_unitario, precio_venta_unitario, stock_actual }) {
     const [result] = await connection.query(
-      'INSERT INTO productos (id, nombre, tipo, unidad_medida, precio_compra_unitario, precio_venta_unitario, stock_actual) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [id, nombre, tipo, unidad_medida, precio_compra_unitario, precio_venta_unitario, stock_actual]
+      'INSERT INTO productos (id, nombre, tipo, unidad_medida, cantidad_por_presentacion, precio_compra_unitario, precio_venta_unitario, stock_actual) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [id, nombre, tipo, unidad_medida, cantidad_por_presentacion, precio_compra_unitario, precio_venta_unitario, stock_actual]
     );
     return { success: (result.affectedRows > 0) ? true : false };
   }
 
-  async update({ id, nombre, tipo, unidad_medida, precio_compra_unitario, precio_venta_unitario, stock_actual }) {
+  async update({ id, nombre, tipo, unidad_medida, cantidad_por_presentacion, precio_compra_unitario, precio_venta_unitario, stock_actual }) {
     const [result] = await connection.query(
-      'UPDATE productos SET nombre = ?, tipo = ?, unidad_medida = ?, precio_compra_unitario = ?, precio_venta_unitario = ?, stock_actual = ? WHERE id = ?',
-      [nombre, tipo, unidad_medida, precio_compra_unitario, precio_venta_unitario, stock_actual, id]
+      'UPDATE productos SET nombre = ?, tipo = ?, unidad_medida = ?, cantidad_por_presentacion = ?, precio_compra_unitario = ?, precio_venta_unitario = ?, stock_actual = ? WHERE id = ?',
+      [nombre, tipo, unidad_medida, cantidad_por_presentacion, precio_compra_unitario, precio_venta_unitario, stock_actual, id]
     );
     return { success: (result.affectedRows > 0) ? true : false };
   }
