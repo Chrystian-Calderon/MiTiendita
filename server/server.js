@@ -23,6 +23,7 @@ app.use(cors(
     credentials: true
   }
 ));
+console.log(process.env.FRONTEND_URL || 'http://localhost:5173');
 app.use(express.json());
 const PORT = process.env.PORT;
 
