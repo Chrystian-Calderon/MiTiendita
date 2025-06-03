@@ -3,6 +3,8 @@ import { useNavigate } from "react-router"
 import Notification from "../components/Notification"
 import { validateUserLogin, validatePasswordLogin } from "../utils/validateLogin"
 import { login } from "../services/authService"
+import { FiLogIn } from "react-icons/fi"
+import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md"
 
 const Login = () => {
   const [values, setValues] = useState({ name: '', password: ''})
@@ -55,7 +57,6 @@ const Login = () => {
       if (error.name === '' && error.password === '' && name && password) {
         const response = await login({username: name, password})
         if (!response.error) {
-          // Guarda el usuario autenticado (puedes guardar el token si tu backend lo envía)
           localStorage.setItem('auth', JSON.stringify({ username: name, logged: true }));
           navigate('/dashboard')
         } else {
@@ -76,7 +77,10 @@ const Login = () => {
 
   return (
     <main className="bg-secundary-v1 w-full h-dvh flex items-center justify-center">
-      <div className="bg-primary-v2 rounded p-5 max-w-sm w-full">
+      <div className="bg-white rounded p-5 max-w-sm w-full">
+        <div className="h-12 w-12 rounded-full bg-primary text-white p-3 mx-auto mb-4">
+          <FiLogIn className="h-full w-full" />
+        </div>
         <h1 className="text-center text-2xl font-bold">Iniciar sesión</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-3 login font-nunito">
           <div className="login-input">

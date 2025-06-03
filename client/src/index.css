@@ -15,7 +15,7 @@
 }
 
 form.login .login-input {@apply relative flex flex-col mt-4}
-form.login .login-input > input {@apply w-full h-12 px-4 border border-solid rounded-lg border-transparent font-nunito focus:outline-none focus:ring-2 focus:ring-primary-v2 focus:border-transparent}
+form.login .login-input > input {@apply w-full h-12 px-4 border border-solid rounded-lg border-transparent font-nunito focus:outline-none focus:ring-2 focus:ring-gray-100 focus:border-transparent}
 form.login .login-input > input:focus + label,
 form.login .login-input > input:not(:placeholder-shown) + label {
   @apply top-[-20px] left-0 text-lg font-bold text-black
