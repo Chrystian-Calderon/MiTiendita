@@ -56,8 +56,8 @@ const AddSaleModal = ({ onClose, onMessage }) => {
             <input type="date" name="fecha" value={form.fecha} onChange={handleChange} required />
           </div>
           <div className="form-group">
-            <label>Total:</label>
-            <input type="number" name="total" value={form.total} onChange={handleChange} required />
+            <label>Precio Total:</label>
+            <input type="text" name="total" value={form.total} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Cantidad:</label>

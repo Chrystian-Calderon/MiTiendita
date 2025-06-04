@@ -58,13 +58,27 @@ const EditSaleModal = ({ data, onClose, onMessage }) => {
       <div className="modal-content flex">
         <form className="flex-1" onSubmit={handleSubmit}>
           <h2>Editar venta</h2>
+          <div className="flex-1 flex flex-col justify-center">
+            <h3>Producto o Plato asociado</h3>
+            {form.producto_id ? (
+              <div>
+                <strong>Producto:</strong>
+                <div className="bg-gray-100 rounded px-2 py-1">{productoNombre}</div>
+              </div>
+            ) : (
+              <div>
+                <strong>Plato:</strong>
+                <div className="bg-gray-100 rounded px-2 py-1">{platoNombre}</div>
+              </div>
+            )}
+          </div>
           <div className="form-group">
             <label>Fecha:</label>
             <input type="date" name="fecha" value={form.fecha} onChange={handleChange} required />
           </div>
           <div className="form-group">
-            <label>Total:</label>
-            <input type="number" name="total" value={form.total} onChange={handleChange} required />
+            <label>Precio Total:</label>
+            <input type="text" name="total" value={form.total} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Cantidad:</label>
@@ -75,20 +89,6 @@ const EditSaleModal = ({ data, onClose, onMessage }) => {
             <button type="submit">Guardar</button>
           </div>
         </form>
-        <div className="flex-1 px-4 flex flex-col justify-center">
-          <h3>Producto o Plato asociado</h3>
-          {form.producto_id ? (
-            <div>
-              <strong>Producto:</strong>
-              <div className="bg-gray-100 rounded px-2 py-1">{productoNombre}</div>
-            </div>
-          ) : (
-            <div>
-              <strong>Plato:</strong>
-              <div className="bg-gray-100 rounded px-2 py-1">{platoNombre}</div>
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );

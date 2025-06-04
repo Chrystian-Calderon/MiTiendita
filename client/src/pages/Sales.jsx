@@ -20,7 +20,6 @@ const Sales = () => {
 
   const fetchSales = async () => {
     const response = await getSales();
-    console.log(response)
     if (response.error) {
       setMsg({ type: 'error', message: response.error });
     } else {
