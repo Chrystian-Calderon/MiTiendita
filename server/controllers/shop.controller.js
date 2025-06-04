@@ -33,10 +33,10 @@ class ShopController {
           compra_id: id,
           producto_id,
           cantidad,
-          precio_unitario: total / cantidad
+          precio_unitario: total / parseInt(cantidad)
         });
         let { stock_actual } = await productModel.findById({ id: producto_id });
-        stock_actual += cantidad;
+        stock_actual += parseInt(cantidad);
         const resultProduct = await productModel.updateStock({ id: producto_id, stock_actual });
         if (!resultShop.success && !resultShopDetail.success && !resultProduct.success) {
           return res.status(400).json({ error: 'Error al crear la venta ingresada' });
@@ -49,9 +49,9 @@ class ShopController {
           nombre: producto.nombre,
           tipo: producto.tipo,
           unidad_medida: producto.unidad_medida,
-          precio_compra_unitario: total / cantidad,
+          precio_compra_unitario: total / parseInt(cantidad),
           precio_venta_unitario: producto.precio_venta_unitario,
-          stock_actual: cantidad
+          stock_actual: parseInt(cantidad)
         });
         const compra_id = uuid();
         const resultShop = await this.model.create({
@@ -64,7 +64,7 @@ class ShopController {
           compra_id: compra_id,
           producto_id: producto_id,
           cantidad,
-          precio_unitario: total / cantidad
+          precio_unitario: total / parseInt(cantidad)
         });
         if (!resultProduct.success || !resultShop.success || !resultShopDetail.success) {
           return res.status(400).json({ error: 'Error al crear la venta ingresada' });

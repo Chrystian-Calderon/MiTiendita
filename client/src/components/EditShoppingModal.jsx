@@ -57,16 +57,22 @@ const EditShoppingModal = ({ data, onClose, onMessage }) => {
   return (
     <div className="modal">
       <div className="modal-content flex">
-        {/* Formulario de edición */}
         <form className="flex-1" onSubmit={handleSubmit}>
           <h2>Editar venta</h2>
+          <div className="flex-1 flex flex-col justify-center">
+            <h3>Producto asociado</h3>
+            <div className="flex gap-2 items-center">
+              <strong>Nombre:</strong>
+              <div className="bg-gray-100 rounded px-2 py-1">{form.producto_nombre}</div>
+            </div>
+          </div>
           <div className="form-group">
             <label>Fecha:</label>
             <input type="date" name="fecha" value={form.fecha} onChange={handleChange} required />
           </div>
           <div className="form-group">
-            <label>Total:</label>
-            <input type="number" name="total" value={form.total} onChange={handleChange} required />
+            <label>Precio Total:</label>
+            <input type="text" name="total" value={form.total} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Cantidad:</label>
@@ -74,26 +80,13 @@ const EditShoppingModal = ({ data, onClose, onMessage }) => {
           </div>
           <div className="form-group">
             <label>Precio Unitario:</label>
-            <input type="number" name="precio_unitario" value={form.precio_unitario} onChange={handleChange} required />
+            <input type="text" name="precio_unitario" value={form.precio_unitario} onChange={handleChange} required />
           </div>
           <div className="form-buttons">
             <button type="button" onClick={onClose}>Cancelar</button>
             <button type="submit">Guardar</button>
           </div>
         </form>
-
-        {/* Columna derecha: Producto (solo lectura) */}
-        <div className="flex-1 border-l px-4 flex flex-col justify-center">
-          <h3>Producto asociado</h3>
-          <div className="mb-2">
-            <strong>ID:</strong>
-            <div className="bg-gray-100 rounded px-2 py-1">{form.producto_id}</div>
-          </div>
-          <div>
-            <strong>Nombre:</strong>
-            <div className="bg-gray-100 rounded px-2 py-1">{form.producto_nombre}</div>
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -15,15 +15,17 @@ const Shopping = () => {
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await getShopping()
-        setShopping(response)
-      } catch (error) {
-        setMsg({ type: 'error', message: 'Error al cargar las compras' })
-      }
-    })()
+    fetchShop()
   }, [])
+
+  const fetchShop = async () => {
+    try {
+      const response = await getShopping()
+      setShopping(response)
+    } catch (error) {
+      setMsg({ type: 'error', message: 'Error al cargar las compras' })
+    }
+  }
 
   const handleEdit = (item) => {
     setData(item)
@@ -47,6 +49,12 @@ const Shopping = () => {
     }
   }
 
+  const handleMessage = async ({ type, message }) => {
+    setMsg({ type, message });
+    if (type !== 'error') await fetchShop();
+    setTimeout(() => setMsg({ type: '', message: '' }), 3000);
+  };
+
   return (
     <main className="grid grid-cols-12">
       <Navigation />
@@ -56,12 +64,12 @@ const Shopping = () => {
           <EditShoppingModal
             data={data}
             onClose={() => {setModalVisible(false); setData(null)}}
-            onMessage={setMsg}
+            onMessage={handleMessage}
           />
         ) : (
           <AddShoppingModal
             onClose={() => setModalVisible(false)}
-            onMessage={setMsg}
+            onMessage={handleMessage}
           />
         )
       )}

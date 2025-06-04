@@ -75,8 +75,8 @@ const AddShoppingModal = ({ onClose, onMessage }) => {
             <input type="date" id="fecha" name="fecha" value={form.fecha} onChange={handleChange} required />
           </div>
           <div className="form-group">
-            <label htmlFor="total">Total:</label>
-            <input type="number" id="total" name="total" value={form.total} onChange={handleChange} required />
+            <label htmlFor="total">Precio Total:</label>
+            <input type="text" id="total" name="total" value={form.total} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label htmlFor="cantidad">Cantidad:</label>
