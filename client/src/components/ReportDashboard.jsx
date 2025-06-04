@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Bar, Line, Pie } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -31,11 +31,12 @@ const ReportDashboard = () => {
   const [costsSales, setCostsSales] = useState(null);
   const [bestProducts, setBestProducts] = useState(null);
   const [bestDishes, setBestDishes] = useState(null);
+  const [showProducts, setShowProducts] = useState(true);
 
   useEffect(() => {
     (async () => {
       const resultCostsSales = await getCostsSales("month")
-      setCostsSales(resultCostsSales)
+      setCostsSales(resultCostsSales.result)
       const resultBestProducts = await getBestSellingProducts(7)
       setBestProducts(resultBestProducts)
       const resultBestDishes = await getBestSellingDishes(7)
@@ -45,19 +46,19 @@ const ReportDashboard = () => {
 
   // Preparar datos para la gráfica de ventas y costos por mes
   let barData = null;
-  if (costsSales && costsSales.sales && costsSales.costs) {
-    const labels = costsSales.sales.map(s => `${s.anio}-${String(s.mes).padStart(2, "0")}`);
+  if (costsSales) {
+    const labels = costsSales.map(s => `${s.anio}-${String(s.mes).padStart(2, "0")}`);
     barData = {
       labels,
       datasets: [
         {
           label: "Ventas",
-          data: costsSales.sales.map(s => s.total_ventas),
+          data: costsSales.map(s => s.total_ventas),
           backgroundColor: "rgba(54, 162, 235, 0.6)"
         },
         {
           label: "Costos",
-          data: costsSales.costs.map(c => c.total_costos),
+          data: costsSales.map(c => c.total_costos),
           backgroundColor: "rgba(255, 99, 132, 0.6)"
         }
       ]
@@ -99,9 +100,9 @@ const ReportDashboard = () => {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-8 p-8">
+    <div className="grid grid-cols-3 gap-8 p-8">
       {/* Ventas y Costos por Mes */}
-      <div className="bg-white rounded shadow p-4 col-span-2 h-70 flex flex-col items-center">
+      <div className="bg-white rounded shadow p-4 col-span-2 flex flex-col items-center">
         <h3 className="text-center mb-2 font-bold">Ventas y Costos por Mes</h3>
         {barData && (
           <Bar
@@ -113,10 +114,19 @@ const ReportDashboard = () => {
           />
         )}
       </div>
-      {/* Productos más vendidos */}
-      <div className="bg-white rounded shadow p-4 h-50 flex flex-col items-center">
-        <h3 className="text-center mb-2 font-bold">Productos más vendidos</h3>
-        {productsPie && (
+      <div className="bg-white rounded shadow p-4 flex flex-col items-center">
+        <div className="flex justify-between w-full mb-2">
+          <h3 className="text-center font-bold flex-1">
+            {showProducts ? "Productos más vendidos" : "Platos más vendidos"}
+          </h3>
+          <button
+            className="ml-2 px-2 py-1 bg-gray-200 rounded text-sm hover:bg-gray-300"
+            onClick={() => setShowProducts(!showProducts)}
+          >
+            {showProducts ? "Ver Platos" : "Ver Productos"}
+          </button>
+        </div>
+        {showProducts && productsPie && (
           <Pie
             data={productsPie}
             options={{
@@ -125,11 +135,7 @@ const ReportDashboard = () => {
             }}
           />
         )}
-      </div>
-      {/* Platos más vendidos */}
-      <div className="bg-white rounded shadow p-4 h-50 flex flex-col items-center">
-        <h3 className="text-center mb-2 font-bold">Platos más vendidos</h3>
-        {dishesPie && (
+        {!showProducts && dishesPie && (
           <Pie
             data={dishesPie}
             options={{

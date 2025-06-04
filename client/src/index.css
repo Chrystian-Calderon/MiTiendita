@@ -67,3 +67,8 @@ main .container-table > table.table tbody td.actions > button.delete {@apply bg-
 .modal .modal-content > form .form-buttons {@apply flex justify-end gap-2 mt-4}
 .modal .modal-content > form button {@apply w-fit px-4 py-2 rounded bg-primary text-white cursor-pointer hover:bg-secundary transition}
 .modal .modal-content > form button[type="button"] {@apply bg-white text-primary border border-primary hover:bg-primary hover:text-white}
+
+/* card info */
+.card-info {@apply border border-gray-500 rounded p-4 w-fit}
+.card-info > h3 {@apply text-gray-700}
+.card-info > p {@apply font-bold text-2xl}

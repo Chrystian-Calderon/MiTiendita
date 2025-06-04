@@ -28,3 +28,30 @@ export const getBestSellingDishes = async (limit) => {
     return { error: e.response.data.error || 'Error al obtener los platos más vendidos' };
   }
 }
+
+export const getSalesWithProfit = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/sales-profit`);
+    return response.data;
+  } catch (e) {
+    return { error: e.response.data.error || 'Error al obtener ventas y ganancia' };
+  }
+}
+
+export const getShopWithIncrement = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/shop-increment`);
+    return response.data;
+  } catch (e) {
+    return { error: e.response.data.error || 'Error al obtener compras y su incremento' };
+  }
+}
+
+export const getProfitMargin = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/profit-margin`);
+    return response.data;
+  } catch (e) {
+    return { error: e.response.data.error || 'Error al obtener margen de ganancia' };
+  }
+}
