@@ -28,11 +28,12 @@ form.login .login-input > span {@apply text-red-500 text-sm mt-3}
 .notification > div {@apply flex p-4}
 
 /* navbar */
-.navbar {@apply col-span-3 bg-primary text-white h-dvh}
+.navbar {@apply col-span-3 bg-primary text-white h-dvh relative}
 .navbar > h1 {@apply text-2xl font-bold text-center py-4 border-b border-white}
 .navbar ul {@apply flex flex-col justify-center items-center gap-4 list-none m-0 p-0}
-.navbar li {@apply w-full}
-.navbar li > a {@apply block w-full px-2 py-3 text-center hover:bg-secundary transition}
+.navbar li {@apply w-full px-8}
+.navbar li > a {@apply flex gap-3 w-full px-2 py-3 rounded text-center hover:bg-secundary transition}
+.navbar > button {@apply absolute bottom-0 ml-10 mb-8 px-2 py-3 rounded cursor-pointer flex gap-3 hover:bg-secundary transition}
 
 /* title */
 main h1.title {@apply text-xl font-bold text-center py-4 bg-secundary text-white}
@@ -46,7 +47,7 @@ main .container-table::-webkit-scrollbar {height: 4px; width: 7px;}
 main .container-table::-webkit-scrollbar-track {@apply bg-white}
 main .container-table::-webkit-scrollbar-thumb {@apply bg-primary rounded-sm}
 main .container-table > table.table {@apply border-collapse min-w-full}
-main .container-table > table.table thead {@apply bg-secundary text-white}
+main .container-table > table.table thead {@apply bg-secundary text-white sticky top-0 z-1}
 main .container-table > table.table th,
 main .container-table > table.table td {@apply border-gray-300 border p-2}
 main .container-table > table.table tr:nth-child(2n),
