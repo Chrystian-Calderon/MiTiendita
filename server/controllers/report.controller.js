@@ -16,6 +16,7 @@ class ReportController {
         return res.status(200).json({ result });
       }
     } catch (e) {
+      console.log(e)
       return res.status(500).json({ error: 'Error al obtener los costos y ventas' });
     }
   }
