@@ -126,17 +126,26 @@ class ReportsModel {
     const [rows] = await connection.query(`
     WITH resumen AS (
       SELECT
-        YEAR(v.fecha) AS anio,
-        MONTH(v.fecha) AS mes,
-        SUM(v.total) AS total_ventas,
-        COALESCE((
-          SELECT SUM(c.total)
-          FROM compras c
-          WHERE YEAR(c.fecha) = YEAR(v.fecha)
-            AND MONTH(c.fecha) = MONTH(v.fecha)
-        ), 0) AS total_costos
-      FROM ventas v
-      GROUP BY YEAR(v.fecha), MONTH(v.fecha)
+        v.anio,
+        v.mes,
+        v.total_ventas,
+        COALESCE(c.total_costos, 0) AS total_costos
+      FROM (
+        SELECT 
+          YEAR(fecha) AS anio,
+          MONTH(fecha) AS mes,
+          SUM(total) AS total_ventas
+        FROM ventas
+        GROUP BY YEAR(fecha), MONTH(fecha)
+      ) v
+      LEFT JOIN (
+        SELECT 
+          YEAR(fecha) AS anio,
+          MONTH(fecha) AS mes,
+          SUM(total) AS total_costos
+        FROM compras
+        GROUP BY YEAR(fecha), MONTH(fecha)
+      ) c ON v.anio = c.anio AND v.mes = c.mes
     ),
     margenes AS (
       SELECT
@@ -167,7 +176,8 @@ class ReportsModel {
         ELSE ROUND(((margen - margen_anterior) / ABS(margen_anterior)) * 100, 2)
       END AS incremento_margen
     FROM con_variacion
-    ORDER BY anio DESC, mes DESC LIMIT 1
+    ORDER BY anio DESC, mes DESC
+    LIMIT 1
     `);
     if (rows.length === 0) return null;
     return rows[0];
