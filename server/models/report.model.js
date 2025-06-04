@@ -20,10 +20,11 @@ class ReportsModel {
         COALESCE((
           SELECT SUM(c.total)
           FROM compras c
-          WHERE DATE_FORMAT(c.fecha, '%Y-%m') = DATE_FORMAT(v.fecha, '%Y-%m')
+          WHERE YEAR(c.fecha) = YEAR(v.fecha)
+			      AND MONTH(c.fecha) = MONTH(v.fecha)
         ), 0) AS total_costos
       FROM ventas v
-      GROUP BY anio, mes
+      GROUP BY YEAR(v.fecha), MONTH(v.fecha)
       ORDER BY anio DESC, mes DESC
     `);
     return rows;
