@@ -5,7 +5,7 @@ class ReportController {
 
   getCostsAndSales = async (req, res) => {
     const { type } = req.body;
-
+    console.log(type)
     try {
       if (type === 'day') {
         const resultSales = await this.model.salesPerDay();
