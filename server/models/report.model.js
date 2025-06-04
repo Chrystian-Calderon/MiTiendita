@@ -13,19 +13,28 @@ class ReportsModel {
 
   async salesAndCostsPerMonth() {
     const [rows] = await connection.query(`
-      SELECT 
-        YEAR(v.fecha) as anio,
-        MONTH(v.fecha) as mes,
-        SUM(v.total) AS total_ventas,
-        COALESCE((
-          SELECT SUM(c.total)
-          FROM compras c
-          WHERE YEAR(c.fecha) = YEAR(v.fecha)
-			      AND MONTH(c.fecha) = MONTH(v.fecha)
-        ), 0) AS total_costos
-      FROM ventas v
-      GROUP BY YEAR(v.fecha), MONTH(v.fecha)
-      ORDER BY anio DESC, mes DESC
+      SELECT
+        v.anio,
+        v.mes,
+        v.total_ventas,
+        COALESCE(c.total_costos, 0) AS total_costos
+      FROM (
+        SELECT 
+          YEAR(fecha) AS anio,
+          MONTH(fecha) AS mes,
+          SUM(total) AS total_ventas
+        FROM ventas
+        GROUP BY YEAR(fecha), MONTH(fecha)
+      ) v
+      LEFT JOIN (
+        SELECT 
+          YEAR(fecha) AS anio,
+          MONTH(fecha) AS mes,
+          SUM(total) AS total_costos
+        FROM compras
+        GROUP BY YEAR(fecha), MONTH(fecha)
+      ) c ON v.anio = c.anio AND v.mes = c.mes
+      ORDER BY v.anio DESC, v.mes DESC
     `);
     return rows;
   }
@@ -45,7 +54,7 @@ class ReportsModel {
       SELECT p.nombre, SUM(vd.cantidad) AS total_vendidos
       FROM ventas_detalle vd
       JOIN productos p ON p.id = vd.producto_id
-      GROUP BY p.id
+      GROUP BY p.id, p.nombre
       ORDER BY total_vendidos DESC
       LIMIT ?
     `, [limit]);
@@ -57,7 +66,7 @@ class ReportsModel {
       SELECT pl.nombre, SUM(vd.cantidad) AS total_vendidos
       FROM ventas_detalle vd
       JOIN platos pl ON pl.id = vd.plato_id
-      GROUP BY pl.id
+      GROUP BY pl.id, pl.nombre
       ORDER BY total_vendidos DESC
       LIMIT ?
     `, [limit]);
@@ -76,7 +85,7 @@ class ReportsModel {
           AND YEAR(c.fecha) = YEAR(CURDATE())
       ), 0) as ganancia
     FROM ventas v
-    GROUP BY anio, mes
+    GROUP BY YEAR(v.fecha), MONTH(v.fecha)
     ORDER BY anio DESC, mes DESC;
     `);
     if (rows.length < 0) return null;
@@ -127,7 +136,7 @@ class ReportsModel {
             AND MONTH(c.fecha) = MONTH(v.fecha)
         ), 0) AS total_costos
       FROM ventas v
-      GROUP BY anio, mes
+      GROUP BY YEAR(v.fecha), MONTH(v.fecha)
     ),
     margenes AS (
       SELECT
