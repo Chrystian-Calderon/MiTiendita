@@ -83,11 +83,11 @@ const ProductModal = ({ data, onClose, onMessage }) => {
           <div className="form-group-2">
             <div className="form-group">
               <label htmlFor="precio_compra_unitario">Precio Compra Unitario:</label>
-              <input type="number" id="precio_compra_unitario" name="precio_compra_unitario" required />
+              <input type="text" id="precio_compra_unitario" name="precio_compra_unitario" required />
             </div>
             <div className="form-group">
               <label htmlFor="precio_venta_unitario">Precio Venta Unitario:</label>
-              <input type="number" id="precio_venta_unitario" name="precio_venta_unitario" required />
+              <input type="text" id="precio_venta_unitario" name="precio_venta_unitario" required />
             </div>
           </div>
           <div className="form-group">

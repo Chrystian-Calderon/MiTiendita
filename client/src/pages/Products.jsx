@@ -82,7 +82,7 @@ const Products = () => {
                   <th>Nombre</th>
                   <th>Tipo</th>
                   <th>Unidad de Medida</th>
-                  <th>Cantidad</th>
+                  <th>Cantidad total</th>
                   <th>Compra unitario</th>
                   <th>Venta unitario</th>
                   <th>Stock</th>
